@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Ambient Study — 专注伴学环境音">
+  <title>Ambient Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-layer" id="bgLayer" aria-hidden="true"></div>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <div class="app">
+    <header class="header">
+      <button class="pill-badge" type="button" id="brandBtn" aria-label="打开场景地点选择">
+        <svg class="pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+          <circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/>
+          <circle cx="15" cy="10" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Ambient Study</span>
+      </button>
+    </header>
+
+    <main class="hero">
+      <div class="clock-display">
+        <div class="clock-block">
+          <p class="clock-primary" id="clockTime" aria-live="polite">00:00</p>
+          <p class="clock-meta" id="clockPeriod">AM</p>
+          <p class="clock-sub" id="locationLabel">书房</p>
+        </div>
+
+        <span class="clock-dot" aria-hidden="true">·</span>
+
+        <div class="clock-block clock-block--right">
+          <p class="clock-primary" id="sceneIndex">01</p>
+          <p class="clock-meta" id="sceneMood">静夜</p>
+          <p class="clock-sub" id="sceneSubtitle">专注模式</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="controls">
+      <nav class="control-bar" aria-label="媒体控制">
+        <button class="ctrl-btn" type="button" id="prevBtn" aria-label="上一个场景">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6 6h2v12H6V6zm3.5 6 8.5 6V6l-8.5 6z"/>
+          </svg>
+        </button>
+
+        <button class="ctrl-btn ctrl-btn--play" type="button" id="playBtn" aria-label="播放">
+          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7L8 5z"/>
+          </svg>
+          <svg class="icon-pause hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/>
+          </svg>
+        </button>
+
+        <button class="ctrl-btn" type="button" id="nextBtn" aria-label="下一个场景">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M16 6h2v12h-2V6zM6 18l8.5-6L6 6v12z"/>
+          </svg>
+        </button>
+
+        <span class="ctrl-divider" aria-hidden="true"></span>
+
+        <div class="volume-wrap">
+          <button class="ctrl-btn" type="button" id="volumeBtn" aria-label="音量" aria-expanded="false" aria-controls="volumePanel">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.06A4.996 4.996 0 0 0 16.5 12z"/>
+            </svg>
+          </button>
+
+          <div class="volume-panel hidden" id="volumePanel" role="group" aria-label="音量调节">
+            <input
+              type="range"
+              class="volume-slider"
+              id="volumeSlider"
+              min="0"
+              max="100"
+              value="60"
+              orient="vertical"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="60"
+            >
+          </div>
+        </div>
+
+        <button class="ctrl-btn" type="button" id="sceneBtn" aria-label="选择场景地点">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="12" cy="8" r="3.5"/>
+            <path d="M5 20c0-3.87 3.13-7 7-7s7 3.13 7 7"/>
+          </svg>
+        </button>
+      </nav>
+    </footer>
+  </div>
+
+  <!-- 场景地点选择 -->
+  <dialog class="scene-dialog" id="locationDialog" aria-labelledby="locationDialogTitle">
+    <div class="dialog-glass">
+      <h2 class="dialog-title" id="locationDialogTitle">选择场景地点</h2>
+      <p class="dialog-desc">切换后将加载该地点的环境音与背景</p>
+      <ul class="location-list" role="listbox" aria-label="场景地点">
+        <li><button type="button" class="location-option" data-location="study">书房 Study</button></li>
+        <li><button type="button" class="location-option" data-location="library">图书馆 Library</button></li>
+        <li><button type="button" class="location-option" data-location="cafe">咖啡厅 Cafe</button></li>
+      </ul>
+      <button type="button" class="dialog-close" id="locationDialogClose">关闭</button>
+    </div>
+  </dialog>
+
+  <audio id="ambientAudio" loop preload="auto" playsinline></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
